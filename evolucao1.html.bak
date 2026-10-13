@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evolução dos Computadores</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: "Agency FB", sans-serif;
+      background-color: #1E1E2F;
+      color: #ECF0F1;
+      font-size: 25px;
+      width: 100vw;
+      min-height: 100vh;
+    }
+
+    h1,
+    h2 {
+      color: #1E90FF;
+    }
+
+    a {
+      color: #F39C12;
+    }
+
+    .navbar,
+    .offcanvas,
+    .dropdown-menu {
+      background-color: #2C3E50 !important;
+      font-size: 25px;
+    }
+
+    .text-justify {
+      text-align: justify;
+    }
+
+    #footer {
+      width: 100%;
+      background-color: #2C3E50;
+      color: #ECF0F1;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 30px;
+    }
+
+    iframe {
+      max-width: 100%;
+    }
+
+    .generation-image {
+      margin-bottom: 40px;
+    }
+
+    .img-fluid {
+      max-height: 300px;
+      object-fit: contain;
+    }
+
+    /* Estilos do Quiz */
+    .quiz-container {
+      background-color: #34495E;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    .question {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .options-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .option {
+      background-color: #1E90FF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 5px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 20px;
+      text-align: left;
+    }
+
+    .option:hover {
+      background-color: #00BFFF;
+    }
+
+    .result-container {
+      font-size: 28px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .navigation-buttons button {
+      background-color: #2C3E50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .navigation-buttons button:hover {
+      background-color: #34495E;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-dark fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html"> Home </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title"> Menu </h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+            aria-label="Fechar"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="historia.html">O que é informação</a></li>
+            <li class="nav-item"><a class="nav-link" href="Babbage.html">Babbage e Ada</a></li>
+            <li class="nav-item"><a class="nav-link" href="logicabooleana1.html">A lógica booleana</a></li>
+            <li class="nav-item"><a class="nav-link" href="evolucao1.html">Evolução dos Computadores</a></li>
+            <li class="nav-item"><a class="nav-link" href="evolucaosoftwares.html">Evolução dos Softwares</a></li>
+            <li class="nav-item"><a class="nav-link" href="numeros1.html">Os números e o ábaco</a></li>
+            <li class="nav-item"><a class="nav-link" href="calculos1.html">A ciência e os cálculos</a></li>
+			<li class="nav-item"><a class="nav-link" href="historiainternet.html">História da Internet</a></li>
+			<li class="nav-item"><a class="nav-link" href="procedimentodidatico.html"> Professor</a></li>
+          </ul>
+      </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container pt-5 my-5">
+    <div class="row">
+      <div class="col-lg-6 mb-4">
+        <h1>Evolução dos Computadores</h1>
+        <p class="text-justify">
+          De acordo com Souza, a história dos computadores é marcada por constantes avanços tecnológicos e é dividida em
+          quatro gerações principais:
+          <br><strong>Primeira Geração (1951-1959):</strong> Utilizavam válvulas eletrônicas, eram grandes, consumiam muita
+          energia e tinham uso restrito. Exemplo: ENIAC.
+          <br><strong>Segunda Geração (1959-1965):</strong> Substituição das válvulas por transistores, o que tornou os
+          computadores mais eficientes e incentivou o uso comercial.
+          <br><strong>Terceira Geração (1965-1975):</strong> Uso de circuitos integrados, diminuição do tamanho e aumento da
+          capacidade de processamento. Surgem os primeiros chips e os computadores pessoais.
+          <br><strong>Quarta Geração (1975 - atual):</strong> Inclusão dos microprocessadores, maior velocidade, menor consumo
+          de energia e disseminação dos computadores pessoais.
+          <br>A partir dos anos 2000, surgem dispositivos móveis como smartphones e tablets. Alguns estudiosos consideram
+          uma <strong>quinta geração</strong>, marcada por supercomputadores, inteligência artificial, robótica e avanços da
+          internet.
+          <br>A evolução dos computadores, que antes era lenta, se tornou muito rápida com o avanço da ciência e da
+          comunicação (Souza - 2025).
+        </p>
+      </div>
+
+      <div class="col-lg-6 mb-4">
+        <h1 class="text-center">Quiz - Evolução dos Computadores</h1>
+        <div class="quiz-container">
+          <div id="quiz"></div>
+          <div class="navigation-buttons">
+            <button id="prevBtn">Anterior</button>
+            <button id="nextBtn">Próximo</button>
+          </div>
+        </div>
+        <div class="result-container" id="result"></div>
+
+        <div class="text-center generation-image">
+          <h2>Todas as Gerações</h2>
+          <img src="imagens/todasgeracoes.png" class="img-fluid" alt="Eniac">
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer id="footer">
+    <p>Universidade Cruzeiro do Sul - Mestrado em Ensino de Ciências e Matemática</p>
+    <p>Mestranda: Lúcia Helena Zotto de Moura - Orientador: Prof. Dr. Alex Paubel Junger</p>
+  </footer>
+
+  <script>
+    const quizData = [{
+        question: "Qual tecnologia foi utilizada na Primeira Geração de computadores?",
+        options: ["Transistores", "Válvulas eletrônicas", "Circuitos integrados", "Microprocessadores"],
+        answer: "Válvulas eletrônicas"
+      },
+      {
+        question: "Em que período ocorreu a Segunda Geração dos computadores?",
+        options: ["1951-1959", "1959-1965", "1965-1975", "1975-atual"],
+        answer: "1959-1965"
+      },
+      {
+        question: "O que substituiu as válvulas eletrônicas na Segunda Geração?",
+        options: ["Circuitos integrados", "Transistores", "Microprocessadores", "Chips"],
+        answer: "Transistores"
+      },
+      {
+        question: "Qual foi a principal inovação da Terceira Geração de computadores?",
+        options: ["Uso de transistores", "Uso de válvulas eletrônicas", "Uso de circuitos integrados",
+          "Inclusão de microprocessadores"
+        ],
+        answer: "Uso de circuitos integrados"
+      },
+      {
+        question: "Quando surgiram os primeiros computadores pessoais?",
+        options: ["Primeira Geração", "Segunda Geração", "Terceira Geração", "Quarta Geração"],
+        answer: "Terceira Geração"
+      },
+      {
+        question: "Qual tecnologia marcou a Quarta Geração dos computadores?",
+        options: ["Válvulas eletrônicas", "Transistores", "Circuitos integrados", "Microprocessadores"],
+        answer: "Microprocessadores"
+      },
+      {
+        question: "A partir de que anos surgiram os dispositivos móveis como smartphones e tablets?",
+        options: ["1975", "1980", "1990", "Anos 2000"],
+        answer: "Anos 2000"
+      },
+      {
+        question: "O que caracteriza a Quinta Geração de computadores, segundo alguns estudiosos?",
+        options: ["Válvulas eletrônicas", "Transistores", "Microprocessadores",
+          "Supercomputadores e Inteligência Artificial"
+        ],
+        answer: "Supercomputadores e Inteligência Artificial"
+      },
+      {
+        question: "Qual o exemplo de computador da Primeira Geração citado no texto?",
+        options: ["ENIAC", "UNIVAC", "IBM PC", "Apple II"],
+        answer: "ENIAC"
+      },
+      {
+        question: "Segundo Souza, como se tornou a evolução dos computadores?",
+        options: ["Mais lenta", "Mais rápida", "Inalterada", "Imprevisível"],
+        answer: "Mais rápida"
+      }
+    ];
+
+    const quiz = document.getElementById("quiz");
+    const result = document.getElementById("result");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedAnswer = null;
+
+    function loadQuestion() {
+      const questionData = quizData[currentQuestion];
+      const optionsHtml = questionData.options.map((option, index) =>
+        `<button class="option" data-index="${index}">${option}</button>`
+      ).join("");
+
+      quiz.innerHTML = `
+        <div class="question">${currentQuestion + 1}. ${questionData.question}</div>
+        <div class="options-container">${optionsHtml}</div>
+      `;
+
+      const options = document.querySelectorAll(".option");
+      options.forEach(option => {
+        option.addEventListener("click", () => selectAnswer(option));
+      });
+    }
+
+    function selectAnswer(option) {
+      selectedAnswer = option.textContent;
+      resetOptionBackgrounds();
+      option.style.backgroundColor = "#00BFFF";
+    }
+
+    function resetOptionBackgrounds() {
+      const options = document.querySelectorAll(".option");
+      options.forEach(option => {
+        option.style.backgroundColor = "#1E90FF";
+      });
+    }
+
+    function checkAnswer() {
+      if (selectedAnswer === quizData[currentQuestion].answer) {
+        score++;
+      }
+    }
+
+    function showResult() {
+      quiz.style.display = "none";
+      prevBtn.style.display = "none";
+      nextBtn.style.display = "none";
+      result.innerHTML = `Você acertou ${score} de ${quizData.length} perguntas!`;
+    }
+
+    function nextQuestion() {
+      checkAnswer();
+      if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+        selectedAnswer = null;
+      } else {
+        showResult();
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+        selectedAnswer = null;
+      }
+    }
+
+    loadQuestion();
+    nextBtn.addEventListener("click", nextQuestion);
+    prevBtn.addEventListener("click", prevQuestion);
+  </script>
+
+</body>
+
+</html>

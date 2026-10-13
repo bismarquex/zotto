@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jogo de Lógica</title>
+  <style>
+    body {
+      font-family: "Agency FB", sans-serif;
+      background-color: #1E1E2F;
+      color: #ECF0F1;
+      font-size: 28px;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .question {
+      background-color: #34495E;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background-color: #1E90FF;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin: 10px 10px 0 0;
+      border-radius: 8px;
+      font-family: "Agency FB", sans-serif;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #00BFFF;
+    }
+
+    #result {
+      font-size: 30px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #restartBtn {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="quiz"></div>
+  <div id="result"></div>
+  <div id="restartBtn">
+    <button onclick="restartGame()">Reiniciar Jogo</button>
+  </div>
+
+  <script>
+    const questions = [
+      { question: "1. Verdadeiro (1) AND Falso (0) é igual a?", options: ["0", "1"], answer: "0" },
+      { question: "2. Verdadeiro (1) OR Falso (0) é igual a?", options: ["0", "1"], answer: "1" },
+      { question: "3. NOT de Verdadeiro (1) é igual a?", options: ["0", "1"], answer: "0" },
+      { question: "4. 1 AND 1 é igual a?", options: ["1", "0"], answer: "1" },
+      { question: "5. 0 OR 0 é igual a?", options: ["1", "0"], answer: "0" },
+      { question: "6. 1 OR 1 é igual a?", options: ["1", "0"], answer: "1" },
+      { question: "7. NOT de Falso (0) é igual a?", options: ["0", "1"], answer: "1" },
+      { question: "8. 1 AND 0 OR 1 é igual a?", options: ["1", "0"], answer: "1" },
+      { question: "9. 0 AND 1 OR 0 é igual a?", options: ["1", "0"], answer: "0" },
+      { question: "10. NOT (1 AND 1) é igual a?", options: ["0", "1"], answer: "0" }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const quiz = document.getElementById("quiz");
+    const result = document.getElementById("result");
+    const restartBtn = document.getElementById("restartBtn");
+
+    function showQuestion() {
+      if (current >= questions.length) {
+        quiz.innerHTML = "";
+        if (score === questions.length) {
+          result.innerHTML = `<span style="color: #00FF7F;">Parabéns! Você venceu! 🏆</span><br>Acertos: ${score}/${questions.length}`;
+        } else {
+          result.innerHTML = `Você acertou ${score} de ${questions.length}.`;
+        }
+        restartBtn.style.display = "block";
+        return;
+      }
+
+      const q = questions[current];
+      quiz.innerHTML = `
+        <div class="question">
+          <p>${q.question}</p>
+          ${q.options.map(opt => `<button onclick="checkAnswer('${opt}')">${opt}</button>`).join("")}
+        </div>
+      `;
+    }
+
+    function checkAnswer(selected) {
+      const correct = questions[current].answer;
+      if (selected === correct) {
+        score++;
+      } else {
+        alert(`Você errou. A resposta correta é: ${correct}`);
+      }
+      current++;
+      showQuestion();
+    }
+
+    function restartGame() {
+      current = 0;
+      score = 0;
+      result.textContent = "";
+      restartBtn.style.display = "none";
+      showQuestion();
+    }
+
+    showQuestion();
+  </script>
+
+</body>
+</html>

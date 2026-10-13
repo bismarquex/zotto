@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jogo das Categorias de Software</title>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/agency-fb');
+
+        body {
+            font-family: 'Agency FB', sans-serif;
+            background-color: #1E1E2F; /* Cor de fundo da página */
+            color: #F5F5F5; /* Cor da letra padrão */
+        }
+
+        .carta {
+            width: 150px;
+            height: 100px;
+            background-color: #434354; /* Cor de fundo da carta */
+            border: 1px solid #61616F;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 5px;
+            float: left;
+            text-align: center;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .carta-interna {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .carta.virada .carta-interna {
+            transform: rotateY(180deg);
+        }
+
+        .carta-frente, .carta-verso {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .carta-frente {
+            background-color: #434354; /* Cor da frente da carta */
+            color: #F5F5F5;
+        }
+
+        .carta-verso {
+            background-color: #fff; /* Cor do verso da carta */
+            color: #333;
+            transform: rotateY(180deg);
+        }
+
+        .carta-verso img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        #tabuleiro {
+            width: fit-content;
+            margin: 20px auto;
+        }
+
+        h1, p {
+            text-align: center;
+            color: #F5F5F5;
+        }
+
+        .conteudo-carta {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .imagem-carta {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 1;
+            z-index: 1;
+        }
+
+        #mensagem {
+            color: #F5F5F5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Encontre os Pares de Software e Categoria</h1>
+    <div id="tabuleiro">
+    </div>
+    <p id="mensagem"></p>
+
+    <script>
+        const categorias = [
+            { nome: "Windows", categoria: "Software de Sistema", imagem: "imagens/windows.png" },
+            { nome: "Linux", categoria: "Software de Sistema", imagem: "imagens/linux.png" },
+            { nome: "Android", categoria: "Software de Sistema", imagem: "imagens/android.png" },
+            { nome: "iOS", categoria: "Software de Sistema", imagem: "imagens/ios.png" },
+            { nome: "macOS", categoria: "Software de Sistema", imagem: "imagens/macos.png" },
+            { nome: "gcc", categoria: "Software de Linguagens", imagem: "imagens/gcc.png" },
+            { nome: "Python", categoria: "Software de Linguagens", imagem: "imagens/python.png" },
+            { nome: "Java", categoria: "Software de Linguagens", imagem: "imagens/java.png" },
+            { nome: "JavaScript", categoria: "Software de Linguagens", imagem: "imagens/javascript.png" },
+            { nome: "C#", categoria: "Software de Linguagens", imagem: "imagens/csharp.png" },
+            { nome: "Microsoft Word", categoria: "Software de Aplicação", imagem: "imagens/word.png" },
+            { nome: "Google Chrome", categoria: "Software de Aplicação", imagem: "imagens/chrome.png" },
+            { nome: "Adobe Photoshop", categoria: "Software de Aplicação", imagem: "imagens/photoshop.png" },
+            { nome: "Mozilla Firefox", categoria: "Software de Aplicação", imagem: "imagens/firefox.png" },
+            { nome: "Microsoft Excel", categoria: "Software de Aplicação", imagem: "imagens/excel.png" },
+            { nome: "BIOS", categoria: "Software Básico", imagem: "imagens/bios.png" },
+            { nome: "Drivers de Dispositivo", categoria: "Software Básico", imagem: "imagens/drivers.png" },
+            { nome: "Gerenciador de Boot", categoria: "Software Básico", imagem: "imagens/boot_manager.png" },
+            { nome: "Sistemas de Controle Industrial", categoria: "Software de Tempo Real", imagem: "imagens/realtime.png" },
+            { nome: "Sistemas de Monitoramento Médico", categoria: "Software de Tempo Real", imagem: "imagens/medical.png" },
+            { nome: "Controle de Tráfego Aéreo", categoria: "Software de Tempo Real", imagem: "imagens/traffic_control.png" },
+            { nome: "SAP", categoria: "Software Comercial", imagem: "imagens/sap.png" },
+            { nome: "Salesforce", categoria: "Software Comercial", imagem: "imagens/salesforce.png" },
+            { nome: "QuickBooks", categoria: "Software Comercial", imagem: "imagens/quickbooks.png" },
+            { nome: "MATLAB", categoria: "Software Científico e de Engenharia", imagem: "imagens/matlab.png" },
+            { nome: "Simuladores de Voo", categoria: "Software Científico e de Engenharia", imagem: "imagens/flight.png" },
+            { nome: "Análise de Dados Científicos", categoria: "Software Científico e de Engenharia", imagem: "imagens/scientific_data.png" },
+            { nome: "Firmware de Geladeira Inteligente", categoria: "Software Embutido", imagem: "imagens/embedded_fridge.png" },
+            { nome: "Software de Controle de Carro", categoria: "Software Embutido", imagem: "imagens/embedded_car.png" },
+            { nome: "Sistema de Navegação GPS", categoria: "Software Embutido", imagem: "imagens/gps.png" },
+            { nome: "Jogos de Computador", categoria: "Software de Computador Pessoal", imagem: "imagens/pc_games.png" },
+            { nome: "Reprodutores de Mídia", categoria: "Software de Computador Pessoal", imagem: "imagens/media_player.png" },
+            { nome: "Editores de Imagem", categoria: "Software de Computador Pessoal", imagem: "imagens/image_editor.png" },
+            { nome: "Sistemas de Reconhecimento Facial", categoria: "Software de Inteligência Artificial", imagem: "imagens/facial_recognition.png" },
+            { nome: "Chatbots", categoria: "Software de Inteligência Artificial", imagem: "imagens/chatbots.png" },
+            { nome: "Sistemas de Recomendação", categoria: "Software de Inteligência Artificial", imagem: "imagens/recommendation_system.png" },
+        ];
+
+        let cartasEmbaralhadas = [];
+        let cartasViradas = [];
+        let paresEncontrados = 0;
+        let tabuleiroElemento;
+
+        function embaralharCartas() {
+            const paresDuplicados = [];
+            categorias.forEach(item => {
+                paresDuplicados.push({ tipo: 'nome', valor: item.nome, par: item, imagem: item.imagem });
+                paresDuplicados.push({ tipo: 'categoria', valor: item.categoria, par: item, imagem: item.imagem });
+            });
+            cartasEmbaralhadas = paresDuplicados.sort(() => Math.random() - 0.5);
+        }
+
+        function criarTabuleiro() {
+            const tabuleiro = document.getElementById('tabuleiro');
+            tabuleiroElemento = tabuleiro;
+            tabuleiro.innerHTML = '';
+            cartasEmbaralhadas.forEach((carta, index) => {
+                const cartaDiv = document.createElement('div');
+                cartaDiv.classList.add('carta');
+                cartaDiv.dataset.index = index;
+                cartaDiv.addEventListener('click', virarCarta);
+
+                const cartaInterna = document.createElement('div');
+                cartaInterna.classList.add('carta-interna');
+
+                const cartaFrente = document.createElement('div');
+                cartaFrente.classList.add('carta-frente');
+                cartaFrente.textContent = carta.tipo === 'nome' ? carta.valor : carta.valor;
+
+                const cartaVerso = document.createElement('div');
+                cartaVerso.classList.add('carta-verso');
+                const img = document.createElement('img');
+                img.src = carta.imagem;
+                cartaVerso.appendChild(img);
+
+                cartaInterna.appendChild(cartaFrente);
+                cartaInterna.appendChild(cartaVerso);
+                cartaDiv.appendChild(cartaInterna);
+                tabuleiro.appendChild(cartaDiv);
+            });
+            paresEncontrados = 0;
+            cartasViradas = [];
+            mensagemElemento.textContent = '';
+        }
+
+        function virarCarta() {
+            const indiceCarta = this.dataset.index;
+            const cartaElemento = this;
+            const carta = cartasEmbaralhadas[indiceCarta];
+
+            if (!cartaElemento.classList.contains('virada') && cartasViradas.length < 2) {
+                cartaElemento.classList.add('virada');
+                cartasViradas.push({ elemento: cartaElemento, carta: carta });
+
+                if (cartasViradas.length === 2) {
+                    tabuleiroElemento.style.pointerEvents = 'none';
+                    setTimeout(verificarPar, 1000);
+                }
+            }
+        }
+
+        function verificarPar() {
+            const carta1 = cartasViradas[0].carta;
+            const carta2 = cartasViradas[1].carta;
+            const elemento1 = cartasViradas[0].elemento;
+            const elemento2 = cartasViradas[1].elemento;
+
+            tabuleiroElemento.style.pointerEvents = 'auto';
+
+            if (carta1.par === carta2.par) {
+                paresEncontrados++;
+                elemento1.removeEventListener('click', virarCarta);
+                elemento2.removeEventListener('click', virarCarta);
+                if (paresEncontrados === categorias.length) {
+                    mensagemElemento.textContent = "Parabéns! Você encontrou todos os pares!";
+                    setTimeout(criarTabuleiro, 2000);
+                }
+            } else {
+                elemento1.classList.remove('virada');
+                elemento2.classList.remove('virada');
+            }
+            cartasViradas = [];
+        }
+
+        let mensagemElemento = document.getElementById('mensagem');
+        embaralharCartas();
+        criarTabuleiro();
+    </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Matemático Completo</title>
+    <style>
+	body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #1E1E2F; /* Cor de fundo alterada */
+    margin: 0;
+    color: white; /* Cor da fonte alterada para branco */
+}
+
+.container {
+    background-color: #282A36; /* Um tom um pouco mais claro para o container */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra um pouco mais escura */
+    text-align: center;
+}
+
+h1 {
+    color: white; /* Título branco */
+    margin-bottom: 20px;
+}
+
+#rodada, #pontuacao, #feedback {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: white; /* Texto branco */
+}
+
+#pergunta {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: white; /* Pergunta branca */
+}
+
+input[type="text"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #44475A; /* Borda mais escura */
+    border-radius: 4px;
+    width: 80%;
+    box-sizing: border-box;
+    background-color: #44475A; /* Fundo do input mais escuro */
+    color: white; /* Texto do input branco */
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#feedback.correto {
+    color: #50FA7B; /* Verde claro para correto */
+}
+
+#feedback.incorreto {
+    color: #FF5555; /* Vermelho claro para incorreto */
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Desafio Matemático Completo</h1>
+        <div id="rodada">Rodada: 1</div>
+        <div id="pergunta"></div>
+        <input type="text" id="resposta" placeholder="Digite sua resposta">
+        <button id="enviarResposta">Enviar Resposta</button>
+        <div id="feedback"></div>
+        <div id="pontuacao">Pontuação: 0</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça Palavras - A Ciência e os Cálculos</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #1E1E2F;
+            margin: 20px;
+            color: #ECF0F1;
+        }
+
+        h1 {
+            color: #ECF0F1;
+            margin-bottom: 20px;
+        }
+
+        .caça-palavras {
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            grid-gap: 2px;
+            border: 1px solid #34495E;
+            padding: 10px;
+            background-color: #2C3E50;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            user-select: none; /* Evita seleção de texto padrão */
+        }
+
+        .letra {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            text-align: center;
+            color: #ECF0F1;
+            cursor: pointer;
+        }
+
+        .letra.selecionada {
+            background-color: #1E90FF;
+        }
+
+        .palavras-lista {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #34495E;
+            background-color: #2C3E50;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .palavras-lista h2 {
+            color: #ECF0F1;
+            margin-top: 0;
+        }
+
+        .palavras-lista ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .palavras-lista li {
+            margin-bottom: 5px;
+            color: #ECF0F1;
+        }
+
+        .palavras-lista li.encontrada {
+            text-decoration: line-through;
+            color: #95A5A6;
+        }
+    </style>
+</head>
+<body>
+    <div class="caça-palavras" id="caçaPalavras">
+    </div>
+    <div class="palavras-lista">
+        <h2>Palavras para Encontrar</h2>
+        <ul id="palavrasParaEncontrar" style="display: flex; flex-wrap: wrap; gap: 8px;">
+        </ul>
+    </div>
+
+    <script>
+        const palavrasOriginais = ["NAPIER", "TABELA", "CALCULO", "NEWTON", "GRAVIDADE",];
+        let palavras = [...palavrasOriginais]; // Cria uma cópia para embaralhar
+        const tamanho = 10;
+        const grid = [];
+        let palavraSelecionada = "";
+        let letrasSelecionadas = [];
+        const palavrasEncontradas = new Set();
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function criarGrid() {
+            for (let i = 0; i < tamanho; i++) {
+                grid.push(Array(tamanho).fill(""));
+            }
+        }
+
+        function inserirPalavra(palavra) {
+            const direcoes = [[0, 1], [1, 0], [1, 1], [1, -1]];
+            const direcao = direcoes[Math.floor(Math.random() * direcoes.length)];
+            let linha, coluna;
+            let tentativa = 0;
+
+            while (tentativa < 100) {
+                linha = Math.floor(Math.random() * tamanho);
+                coluna = Math.floor(Math.random() * tamanho);
+                let podeInserir = true;
+
+                for (let i = 0; i < palavra.length; i++) {
+                    const novaLinha = linha + i * direcao[0];
+                    const novaColuna = coluna + i * direcao[1];
+
+                    if (novaLinha < 0 || novaLinha >= tamanho || novaColuna < 0 || novaColuna >= tamanho) {
+                        podeInserir = false;
+                        break;
+                    }
+                    if (grid[novaLinha][novaColuna] !== "" && grid[novaLinha][novaColuna] !== palavra[i]) {
+                        podeInserir = false;
+                        break;
+                    }
+                }
+
+                if (podeInserir) {
+                    for (let i = 0; i < palavra.length; i++) {
+                        const novaLinha = linha + i * direcao[0];
+                        const novaColuna = coluna + i * direcao[1];
+                        grid[novaLinha][novaColuna] = palavra[i];
+                    }
+                    return true;
+                }
+                tentativa++;
+            }
+            return false;
+        }
+
+        function preencherVazios() {
+            const letras = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            for (let i = 0; i < tamanho; i++) {
+                for (let j = 0; j < tamanho; j++) {
+                    if (grid[i][j] === "") {
+                        grid[i][j] = letras[Math.floor(Math.random() * letras.length)];
+                    }
+                }
+            }
+        }
+
+        function exibirCaçaPalavras() {
+            const caçaPalavrasDiv = document.getElementById("caçaPalavras");
+            caçaPalavrasDiv.innerHTML = ""; // Limpa o grid anterior
+            grid.forEach((linha, i) => {
+                const linhaDiv = document.createElement("div");
+                linhaDiv.classList.add("linha");
+                linha.forEach((letra, j) => {
+                    const letraDiv = document.createElement("div");
+                    letraDiv.classList.add("letra");
+                    letraDiv.textContent = letra;
+                    letraDiv.dataset.linha = i;
+                    letraDiv.dataset.coluna = j;
+                    letraDiv.addEventListener("click", selecionarLetra);
+                    linhaDiv.appendChild(letraDiv);
+                });
+                caçaPalavrasDiv.appendChild(linhaDiv);
+            });
+        }
+
+        function exibirPalavrasParaEncontrar() {
+            const palavrasParaEncontrarUl = document.getElementById("palavrasParaEncontrar");
+            palavrasOriginais.forEach(palavra => {
+                console.log(palavra); // Adicionado para debugging
+                const palavraLi = document.createElement("li");
+                palavraLi.textContent = palavra;
+                palavraLi.dataset.palavra = palavra;
+                palavrasParaEncontrarUl.appendChild(palavraLi);
+            });
+        }
+
+        function selecionarLetra(event) {
+            const letraDiv = event.target;
+            const linha = parseInt(letraDiv.dataset.linha);
+            const coluna = parseInt(letraDiv.dataset.coluna);
+
+            letraDiv.classList.toggle("selecionada");
+
+            const index = letrasSelecionadas.findIndex(l => l.linha === linha && l.coluna === coluna);
+            if (index === -1) {
+                letrasSelecionadas.push({ linha, coluna, letra: letraDiv.textContent });
+            } else {
+                letrasSelecionadas.splice(index, 1);
+            }
+
+            // Ordena as letras selecionadas por linha e coluna para facilitar a comparação
+            letrasSelecionadas.sort((a, b) => {
+                if (a.linha !== b.linha) return a.linha - b.linha;
+                return a.coluna - b.coluna;
+            });
+
+            palavraSelecionada = letrasSelecionadas.map(l => l.letra).join("");
+            verificarPalavraEncontrada();
+        }
+
+        function verificarPalavraEncontrada() {
+            if (palavrasOriginais.includes(palavraSelecionada)) {
+                if (!palavrasEncontradas.has(palavraSelecionada)) {
+                    palavrasEncontradas.add(palavraSelecionada);
+                    riscarPalavraDaLista(palavraSelecionada);
+                    limparSelecao();
+                }
+            }
+        }
+
+        function riscarPalavraDaLista(palavraEncontrada) {
+            const listaPalavras = document.getElementById("palavrasParaEncontrar").children;
+            for (let i = 0; i < listaPalavras.length; i++) {
+                if (listaPalavras[i].dataset.palavra === palavraEncontrada) {
+                    listaPalavras[i].classList.add("encontrada");
+                    break;
+                }
+            }
+        }
+
+        function limparSelecao() {
+            const letrasSelecionadasNaTela = document.querySelectorAll(".letra.selecionada");
+            letrasSelecionadasNaTela.forEach(letra => letra.classList.remove("selecionada"));
+            palavraSelecionada = "";
+            letrasSelecionadas = [];
+        }
+
+        // Inicialização
+        shuffleArray(palavras);
+        criarGrid();
+        palavras.forEach(palavra => inserirPalavra(palavra));
+        preencherVazios();
+        exibirCaçaPalavras();
+        exibirPalavrasParaEncontrar();
+    </script>
+</body>
+</html>
