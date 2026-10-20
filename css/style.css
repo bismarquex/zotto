@@ -1,0 +1,88 @@
+body {
+    font-family: "Agency FB", sans-serif;
+    background-color: #1E1E2F;
+    color: #ECF0F1;
+    font-size: 35px;
+    /* Tamanho de fonte relativo para melhor acessibilidade */
+    line-height: 1.6;
+    /* Espaçamento entre linhas para melhor leitura */
+    margin: 0;
+    /* Reset de margens */
+    padding-top: 56px;
+    /* Espaço para a navbar fixa */
+}
+
+h1 {
+    color: #1E90FF;
+    margin-bottom: 1.5rem;
+}
+
+h2 {
+    color: #1E90FF;
+    border-bottom: 2px solid #1E90FF;
+    padding-bottom: 0.5rem;
+    margin-top: 2rem;
+}
+
+a {
+    color: #F39C12;
+    text-decoration: none;
+    /* Remove sublinhado padrão */
+}
+
+.navbar,
+.offcanvas,
+.dropdown-menu {
+    background-color: #2C3E50 !important;
+    font-size: 25px;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+ /* Rodapé */
+    #footer {
+      width: 100%;
+      background-color: #2C3E50;
+      color: #ECF0F1;
+      padding: 15px 0;
+      text-align: center;
+      font-size: 30px;
+      margin-top: 30px;
+    }
+}
+
+.img-fluid {
+    border-radius: 0.5rem;
+    max-width: 100%;
+    height: auto;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.lead {
+    font-size: 35px;
+    font-weight: 300;
+    /* Peso da fonte mais leve */
+    margin-bottom: 1.5rem;
+}
+
+/* Estilos para telas menores */
+@media (max-width: 768px) {
+    body {
+        font-size: 30px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    h2 {
+        font-size: 38px;
+    }
+}
